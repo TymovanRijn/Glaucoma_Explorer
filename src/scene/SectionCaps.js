@@ -18,7 +18,7 @@ export class SectionCaps {
     this.items = [];
     this.order = 10;
     this.visible = false;
-    this.planeGeo = new THREE.PlaneGeometry(220, 220);
+    this.planeGeo = new THREE.PlaneGeometry(34, 34); // just larger than the eye's cross-section
   }
 
   /**
@@ -53,10 +53,9 @@ export class SectionCaps {
     m0.frustumCulled = m1.frustumCulled = false;
     parent.add(m0, m1);
 
-    const capMat = new THREE.MeshStandardMaterial({
-      color,
-      roughness: 0.75,
-      metalness: 0,
+    // unlit, flat colour: cheap to draw (it can cover the whole screen) and diagram-like
+    const capMat = new THREE.MeshBasicMaterial({
+      color: new THREE.Color(color).multiplyScalar(0.92),
       transparent: opacity < 1,
       opacity,
       stencilWrite: true,
@@ -66,7 +65,7 @@ export class SectionCaps {
       stencilZFail: THREE.ReplaceStencilOp,
       stencilZPass: THREE.ReplaceStencilOp,
       side: THREE.DoubleSide,
-      emissive: new THREE.Color(color).multiplyScalar(0.18),
+      fog: false,
     });
     const cap = new THREE.Mesh(this.planeGeo, capMat);
     cap.renderOrder = order + 0.5;
@@ -100,6 +99,7 @@ export class SectionCaps {
       // plane: n·x + c = 0  ->  point = -c * n
       it.cap.position.copy(p.normal).multiplyScalar(-p.constant);
       it.cap.lookAt(it.cap.position.clone().sub(p.normal));
+      it.cap.scale.setScalar(this.scale || 1);
     }
   }
 }

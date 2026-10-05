@@ -75,7 +75,7 @@ export class Minimap {
     draw(A.irisProfile().loop, 'rgba(110,80,55,1)', null);
     // labels
     g.fillStyle = 'rgba(200,220,240,0.55)';
-    g.font = '9px Inter, sans-serif';
+    g.font = '9px IBM Plex Sans, sans-serif';
     g.textAlign = 'center';
     g.fillText('FRONT', this.size / 2, 9);
     g.save();

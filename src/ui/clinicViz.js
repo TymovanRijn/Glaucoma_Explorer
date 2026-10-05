@@ -61,7 +61,7 @@ export function drawOCT(canvas, fibres, damage) {
   // axes
   g.strokeStyle = 'rgba(255,255,255,0.15)';
   g.lineWidth = 1;
-  g.font = '20px Inter, sans-serif';
+  g.font = '20px IBM Plex Sans, sans-serif';
   g.fillStyle = 'rgba(220,235,250,0.7)';
   for (const v of [0, 50, 100, 150, 200]) {
     g.beginPath();
@@ -229,7 +229,7 @@ export function drawGonio(canvas, v) {
   ];
   // label the bands that are still visible
   const covered = closure > 0.01 ? irisTop - closure * (irisTop - ySchwalbe + 6) * 0.82 : H;
-  g.font = `600 ${Math.round(W / 34)}px Inter, sans-serif`;
+  g.font = `600 ${Math.round(W / 34)}px IBM Plex Sans, sans-serif`;
   g.textAlign = 'right';
   for (const [text, yy2] of labels) {
     if (yy2 > covered && text !== 'Iris') continue;
@@ -298,11 +298,11 @@ export function drawTonometer(canvas, t, iop) {
   g.fillStyle = '#3b4a5c';
   g.fillRect(0, cy - 30, 44, 60);
   g.fillStyle = 'rgba(220,235,250,0.75)';
-  g.font = '20px Inter, sans-serif';
+  g.font = '20px IBM Plex Sans, sans-serif';
   g.fillText('air', 6, cy + 54);
   if (t >= 0.85) {
     g.fillStyle = '#fff';
-    g.font = 'bold 34px Space Grotesk, Inter, sans-serif';
+    g.font = 'bold 34px IBM Plex Mono, monospace';
     g.fillText(`${iop.toFixed(0)} mmHg`, W * 0.06, H * 0.18);
   }
 }

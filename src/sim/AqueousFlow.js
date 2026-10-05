@@ -165,7 +165,7 @@ export class AqueousFlow {
     pt.speed = 0.75 + Math.random() * 0.5;
     pt.wait = 0;
     pt.channel = CHANNEL_PHI.reduce((best, c) => (angDist(c, pt.phi) < angDist(best, pt.phi) ? c : best), CHANNEL_PHI[0]);
-    pt.size = 0.055 + Math.random() * 0.04;
+    pt.size = 0.04 + Math.random() * 0.03;
     return pt;
   }
 

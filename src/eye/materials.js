@@ -143,7 +143,7 @@ export function makeParticleMaterial(sprite, { additive = true, opacity = 1, siz
         #include <begin_vertex>
         #include <project_vertex>
         gl_PointSize = aSize * uSizeScale * uScale / max(0.0001, -mvPosition.z);
-        gl_PointSize = min(gl_PointSize, 64.0);
+        gl_PointSize = clamp(gl_PointSize, 1.5, 24.0);
         #include <logdepthbuf_vertex>
         #include <clipping_planes_vertex>
         #include <fog_vertex>

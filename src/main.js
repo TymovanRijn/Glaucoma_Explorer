@@ -201,7 +201,10 @@ class App {
       chat: this.chat,
       onFly: (id) => this.flyToPart(id),
       onSelect: (id, o) => this.select(id, o),
-      onClose: () => this.eye.setHighlight(null, false),
+      onClose: () => {
+        this.eye.setHighlight(null, false);
+        document.body.classList.remove('info-open');
+      },
     });
     this.lab = new Lab(root, {
       model: this.model,
@@ -211,7 +214,10 @@ class App {
       onView: (v) => this.labView(v),
       onVision: (on) => this.setVision(on),
     });
-    this.lab.onClose = () => this.setNav(this.tours.active ? 'tours' : 'explore');
+    this.lab.onClose = () => {
+      document.body.classList.remove('lab-open');
+      this.setNav(this.tours.active ? 'tours' : 'explore');
+    };
     this.clinic = new Clinic(root, { model: this.model, fibres: this.eye.fibres, vessels: this.eye.vessels, onOpenLab: () => this.openLab() });
     this.clinic.onClose = () => this.setNav(this.lab.isOpen ? 'lab' : 'explore');
     this.library = new Library(root, { onPart: (id) => this.select(id, { fly: true }) });
@@ -394,6 +400,7 @@ class App {
     if (this.tours.active) this.tours.end();
     this.info.close();
     this.lab.open();
+    document.body.classList.add('lab-open');
     if (this.model.id !== 'healthy' && this.lab.body.querySelector('.scenario-grid') === null) this.lab.update(true);
     this.setNav('lab');
   }
@@ -412,6 +419,7 @@ class App {
   select(id, { fly = false } = {}) {
     if (!PARTS[id]) return;
     this.info.show(id);
+    document.body.classList.add('info-open');
     this.eye.setHighlight(id, true);
     if (fly) this.flyToPart(id);
     this.rig.exitLock();
@@ -501,6 +509,7 @@ class App {
     for (const b of this.ui.modeSwitch.querySelectorAll('[data-mode]')) b.classList.toggle('active', b.dataset.mode === m);
     this.ui.crosshair.classList.toggle('hidden', m !== 'swim');
     this.ui.touch.classList.toggle('hidden', !(this.isTouch && m === 'swim'));
+    document.body.classList.toggle('touch-swim', this.isTouch && m === 'swim');
     if (m === 'swim' && this.rig.mode === 'swim') {
       if (!this.isTouch) toast('Click the view to steer with your mouse · <span class="kbd">W A S D</span> to swim · <span class="kbd">Esc</span> to release', 4200);
     }
@@ -713,6 +722,7 @@ class App {
     }
 
     // 6. draw
+    this.caps.scale = this.eye.vis.globeScale;
     this.caps.update();
     this.stage.render();
     this.labelRenderer.render(this.stage.scene, this.stage.camera);

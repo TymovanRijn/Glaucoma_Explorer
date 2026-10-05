@@ -75,7 +75,7 @@ export function drawFieldMap(ctx, field, size, { grid = true, labels = false } =
   }
   if (labels) {
     ctx.fillStyle = '#333';
-    ctx.font = `${Math.round(size / 26)}px Inter, sans-serif`;
+    ctx.font = `${Math.round(size / 26)}px IBM Plex Sans, sans-serif`;
     ctx.fillText('nasal', 6, size / 2 - 6);
     ctx.textAlign = 'right';
     ctx.fillText('temporal', size - 6, size / 2 - 6);

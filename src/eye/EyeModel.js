@@ -238,7 +238,7 @@ export class EyeModel {
     caps.add(e, lathe(A.corneaProfile(), seg), '#cfe8f3', { partId: 'cornea' });
     caps.add(e, lathe(A.lensProfile(), seg), '#f1dfa8', { partId: 'lens' });
     caps.add(e, lathe(close(A.ciliaryProfile()), seg), '#6c3022', { partId: 'ciliary-body' });
-    caps.add(e, lathe(close(A.trabecularProfile()), seg * 2), '#c09070', { partId: 'trabecular-meshwork' });
+    this.tmCap = caps.add(e, lathe(close(A.trabecularProfile()), seg * 2), '#c09070', { partId: 'trabecular-meshwork' });
     caps.add(e, lathe(close(A.spurProfile()), seg * 2), '#fbf8f2', { partId: 'scleral-spur' });
     caps.add(e, lathe(A.choroidProfile(), seg), '#5e1a13', { partId: 'choroid' });
     caps.add(e, lathe(A.retinaProfile(), seg), '#e08a6c', { partId: 'retina' });
@@ -372,7 +372,7 @@ export class EyeModel {
     const mat = this.mat({ color: '#5b2c1d', roughness: 0.7, bumpMap: this.bump, bumpScale: 0.8 });
     this.add(new THREE.Mesh(lathe(A.ciliaryProfile(), this.segments), mat), 'ciliary-body');
 
-    this.processMat = this.mat({ color: '#8a3b2c', roughness: 0.55, emissive: '#1ac8ff', emissiveIntensity: 0 });
+    this.processMat = this.mat({ color: '#9a4434', roughness: 0.55, emissive: '#3fd4ff', emissiveIntensity: 0 });
     const n = 72;
     const geo = new THREE.SphereGeometry(1, 14, 10);
     const inst = new THREE.InstancedMesh(geo, this.processMat, n);
@@ -521,6 +521,7 @@ export class EyeModel {
     const D = DIMS.disc;
     const fd = Math.hypot(u - F.u, v - F.v);
     const dd = Math.hypot(u - D.u, v - D.v);
+    if (dd < D.radius) return this.resolveDisc(p);
     if (fd < DIMS.maculaRadius) return 'macula';
     if (dd < D.radius + 1.6) return 'rnfl';
     // close to the front edge of the retina
@@ -1108,6 +1109,7 @@ export class EyeModel {
 
     // drainage meshwork appearance: clogging fills the pores, tint shows what is clogging it
     this.tmMat.color.copy(v.tmTint);
+    if (this.tmCap) this.tmCap.cap.material.color.copy(v.tmTint).multiplyScalar(0.95);
     this.tmMat.alphaTest = 0.5 - v.tmClog * 0.42;
 
     // cornea: swollen & hazy when the pressure spikes suddenly (or in congenital glaucoma)
@@ -1173,6 +1175,6 @@ export class EyeModel {
   /** Make the ciliary processes glow while they "pump" aqueous humour. */
   setProductionGlow(level, time) {
     const base = this.processMat.userData;
-    base.baseEmissiveIntensity = level * (0.35 + 0.25 * Math.sin(time * 2.4));
+    base.baseEmissiveIntensity = level * (0.1 + 0.08 * Math.sin(time * 2.4));
   }
 }

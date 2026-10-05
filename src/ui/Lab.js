@@ -244,7 +244,7 @@ export class Lab {
     g.lineTo(W, y(21));
     g.stroke();
     g.fillStyle = 'rgba(200,220,240,0.5)';
-    g.font = '18px Inter, sans-serif';
+    g.font = '18px IBM Plex Sans, sans-serif';
     g.fillText('pressure', 8, 22);
     g.fillStyle = 'rgba(255,93,108,0.75)';
     g.fillText('nerve damage', 100, 22);
