@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Glaucoma Explorer</title>
+    <meta name="description" content="Swim inside a 3D human eye. Explore its anatomy, watch how fluid flows and drains, and see how every type of glaucoma damages the optic nerve — and how it is detected and treated." />
+    <meta name="theme-color" content="#040a14" />
+    <meta property="og:title" content="Glaucoma Explorer — a 3D journey inside the eye" />
+    <meta property="og:description" content="Interactive 3D anatomy of the eye and a live simulation of how glaucoma steals sight." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='28' fill='%23eef3f7'/%3E%3Ccircle cx='32' cy='32' r='14' fill='%2336a3c9'/%3E%3Ccircle cx='32' cy='32' r='6.5' fill='%23050a12'/%3E%3Ccircle cx='28' cy='28' r='2.5' fill='%23fff'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="app" aria-label="3D view of the human eye"></div>
+    <div id="vignette"></div>
+    <div id="labels"></div>
+    <div id="vision" class="hidden"></div>
+    <div id="ui"></div>
+
+    <div id="loading">
+      <div class="ld">
+        <div class="ring"></div>
+        <div class="ld-text">Growing an eye…</div>
+      </div>
+    </div>
+
+    <noscript>
+      <p style="padding: 2rem; color: #fff">Glaucoma Explorer needs JavaScript to show the 3D eye.</p>
+    </noscript>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
